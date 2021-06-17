@@ -1,46 +1,36 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="@stack('html-class')">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+    <title>{{ config('app.name', 'JustBoil Admin One') }}</title>
 
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    {{-- Scripts --}}
+    @stack('head-scripts')
 
-        @livewireStyles
+    {{-- Fonts --}}
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
-        <!-- Scripts -->
-        <script src="{{ mix('js/app.js') }}" defer></script>
-    </head>
-    <body class="font-sans antialiased">
-        <x-jet-banner />
+    {{-- Styles --}}
+    <link href="{{ mix($stylesheet ?? 'css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/vendor.css') }}" rel="stylesheet">
 
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+    @stack('head-after')
+</head>
+<body>
 
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+<div id="app">
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
-        </div>
+    @yield('content')
 
-        @stack('modals')
+</div>
 
-        @livewireScripts
-    </body>
+@stack('bottom')
+
+</body>
 </html>
